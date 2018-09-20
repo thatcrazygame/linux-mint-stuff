@@ -21,7 +21,7 @@ NordVPNApplet.prototype = {
     _init: function(orientation, panel_height, instance_id) {
         Applet.IconApplet.prototype._init.call(this, orientation, panel_height, instance_id);
 
-        this.settings = new Settings.AppletSettings(this, "nordvpn@JoshRagsdell", instance_id);
+        this.settings = new Settings.AppletSettings(this, "nordvpn@thatcrazygame", instance_id);
         this.signals = new SignalManager.SignalManager(null);
 
         this.settings.bindProperty(Settings.BindingDirection.IN,"country","country",this.on_settings_changed,null);
