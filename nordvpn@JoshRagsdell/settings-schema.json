@@ -1,0 +1,38 @@
+{
+    "header-settings" : {
+        "type" : "header",
+        "description" : "Settings"
+    },
+    "country": {
+        "type": "combobox",
+        "default": "",
+        "description": "Specify country to use in auto-connect",
+        "options": {
+            "None": ""
+        }
+    },
+    "killswitch": {
+        "type": "switch",
+        "default": false,
+        "description": "Internet killswitch when VPN connection drops"
+    },
+    "cybersec": {
+        "type": "switch",
+        "default": false,
+        "description": "CyberSec: Additional advertising, privacy, and security protection"
+    },
+    "protocol": {
+        "type": "radiogroup",
+        "default": "udp",
+        "description": "VPN protocol",
+        "options": {
+            "UDP": "udp",
+            "TCP": "tcp"
+        }
+    },
+    "notifications": {
+        "type": "switch",
+        "default": true,
+        "description": "Notifications"
+    }
+}

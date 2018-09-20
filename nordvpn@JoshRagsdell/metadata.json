@@ -1,0 +1,7 @@
+{
+    "uuid": "nordvpn@JoshRagsdell",
+    "name": "NordVPN",
+    "description": "Click on the applet to toggle NordVPN connection.",
+    "icon": "nordvpn",
+    "max-instances": 1
+}
