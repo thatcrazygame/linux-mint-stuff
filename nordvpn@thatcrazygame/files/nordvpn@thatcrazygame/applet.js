@@ -142,6 +142,7 @@ NordVPNApplet.prototype = {
 
     },
 
+
     on_applet_removed_from_panel: function() {
       Mainloop.source_remove(this.loopId);
       this.loopId = 0;
