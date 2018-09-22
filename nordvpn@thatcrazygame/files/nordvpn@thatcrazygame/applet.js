@@ -2,7 +2,6 @@ const Applet = imports.ui.applet;
 const Settings = imports.ui.settings;
 const Util = imports.misc.util;
 const Main = imports.ui.main;
-const SignalManager = imports.misc.signalManager;
 const Mainloop = imports.mainloop;
 
 const loopInterval = 5000;
@@ -22,29 +21,12 @@ NordVPNApplet.prototype = {
         Applet.IconApplet.prototype._init.call(this, orientation, panel_height, instance_id);
 
         this.settings = new Settings.AppletSettings(this, "nordvpn@thatcrazygame", instance_id);
-        this.signals = new SignalManager.SignalManager(null);
 
-        this.settings.bindProperty(Settings.BindingDirection.IN,"country","country",this.on_settings_changed,null);
-        this.settings.bindProperty(Settings.BindingDirection.IN,"killswitch","killswitch",this.on_settings_changed,null);
-        this.settings.bindProperty(Settings.BindingDirection.IN,"protocol","protocol",this.on_settings_changed,null);
-        this.settings.bindProperty(Settings.BindingDirection.IN,"cybersec","cybersec",this.on_settings_changed,null);
-        this.settings.bindProperty(Settings.BindingDirection.IN,"notifications","notifications",this.on_settings_changed,null);
-
-        this.signals.connect(this.settings, "changed::country", function(){
-            var message = "";
-
-            if (this.country === ""){
-                message = "No country set. Auto-connect will pick best server. Please reconnect to VPN to enable the change.";
-            } else {
-                message = "Auto-connect will connect to %s. Please reconnect to VPN to enable the change.".format(this.country);
-            }
-            this._nordNotify(message);
-        }.bind(this));
-
-        this.signals.connect(this.settings, "changed::killswitch", this._settingChangedCallback.bind(this,"killswitch"));
-        this.signals.connect(this.settings, "changed::cybersec", this._settingChangedCallback.bind(this,"cybersec"));
-        this.signals.connect(this.settings, "changed::protocol", this._settingChangedCallback.bind(this,"protocol"));
-
+        this.settings.bind("country","country",this.on_settings_changed.bind(this),"country");
+        this.settings.bind("killswitch","killswitch",this.on_settings_changed.bind(this),"killswitch");
+        this.settings.bind("protocol","protocol",this.on_settings_changed.bind(this),"protocol");
+        this.settings.bind("cybersec","cybersec",this.on_settings_changed.bind(this),"cybersec");
+        this.settings.bind("notifications","notifications",this.on_settings_changed.bind(this));
 
         Util.spawn(['nordvpn','refresh']);
         this._updateCountryList();
@@ -100,20 +82,6 @@ NordVPNApplet.prototype = {
         }
     },
 
-    _settingChangedCallback: function(setting) {
-        var value = this[setting];
-
-        if (typeof value === "boolean") {
-            if (value) {
-                value = "enable";
-            } else {
-                value = "disable";
-            }
-        }
-
-        Util.spawn_async(["nordvpn","set",setting,value],this._nordNotify.bind(this));
-    },
-
     _clickToggleCallback: function(status) {
         var args = ['nordvpn'];
         if (trim(status) == 'You are not connected to NordVPN.') {
@@ -135,7 +103,7 @@ NordVPNApplet.prototype = {
             function(countries) {
 
                 var countryValues = trim(countries).split('\n');
-                var countryDescriptions = trim(countries).replace(/_/g , " ").split('\n');
+                var countryDescriptions = trim(countries).replace(/_/g, " ").split('\n');
 
                 var options = { None: "" };
 
@@ -147,6 +115,31 @@ NordVPNApplet.prototype = {
 
             }.bind(this)
         );
+    },
+
+    on_settings_changed: function(value, setting) {
+        if (setting == "country") {
+            var message = "";
+
+            if (this.country === ""){
+                message = "No country set. Auto-connect will pick best server. Please reconnect to VPN to enable the change.";
+            } else {
+                message = "Auto-connect will connect to %s. Please reconnect to VPN to enable the change.".format(this.country.replace(/_/g," "));
+            }
+            this._nordNotify(message);
+
+        } else if (setting != null) {
+            if (typeof value === "boolean") {
+                if (value) {
+                    value = "enable";
+                } else {
+                    value = "disable";
+                }
+            }
+
+            Util.spawn_async(["nordvpn","set",setting,value],this._nordNotify.bind(this));
+        }
+
     },
 
     on_applet_removed_from_panel: function() {
