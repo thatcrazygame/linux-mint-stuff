@@ -6,10 +6,15 @@
     "country": {
         "type": "combobox",
         "default": "",
-        "description": "Specify country to use in auto-connect",
+        "description": "Specify country to use in quick-connect",
         "options": {
             "None": ""
         }
+    },
+    "autoconnect": {
+        "type": "switch",
+        "default": false,
+        "description": "Autoconnect on start"
     },
     "killswitch": {
         "type": "switch",

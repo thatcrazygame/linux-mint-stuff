@@ -26,6 +26,7 @@ NordVPNApplet.prototype = {
         this.settings.bind("killswitch","killswitch",this.on_settings_changed.bind(this),"killswitch");
         this.settings.bind("protocol","protocol",this.on_settings_changed.bind(this),"protocol");
         this.settings.bind("cybersec","cybersec",this.on_settings_changed.bind(this),"cybersec");
+        this.settings.bind("autoconnect","autoconnect",this.on_settings_changed.bind(this),"autoconnect");
         this.settings.bind("notifications","notifications",this.on_settings_changed.bind(this));
 
         Util.spawn(['nordvpn','refresh']);
