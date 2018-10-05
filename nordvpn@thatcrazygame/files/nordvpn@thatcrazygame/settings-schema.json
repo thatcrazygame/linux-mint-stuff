@@ -39,5 +39,18 @@
         "type": "switch",
         "default": true,
         "description": "Notifications"
+    },
+    "login/out":{
+        "type": "separator"
+    },
+    "login":{
+        "type": "button",
+        "description": "Log in",
+        "callback": "login"
+    },
+    "logout":{
+        "type": "button",
+        "description": "Log out",
+        "callback": "logout"
     }
 }

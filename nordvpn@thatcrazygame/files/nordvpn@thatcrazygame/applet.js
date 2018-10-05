@@ -5,6 +5,7 @@ const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 
 const loop_interval = 5000;
+const default_terminal = "gnome-terminal";
 
 function NordVPNApplet(orientation, panel_height, instance_id) {
     this._init(orientation, panel_height, instance_id);
@@ -143,8 +144,12 @@ NordVPNApplet.prototype = {
         }
 
     },
-
-
+    login: function() {
+        Util.spawn([default_terminal,"--","nordvpn","login"]);
+    },
+    logout: function() {
+        Util.spawn_async(["nordvpn","logout"],this.nord_notify.bind(this));
+    },
     on_applet_removed_from_panel: function() {
       Mainloop.source_remove(this.loop_id);
       this.loop_id = 0;
