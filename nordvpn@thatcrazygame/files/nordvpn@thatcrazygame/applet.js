@@ -4,7 +4,7 @@ const Util = imports.misc.util;
 const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 
-const loopInterval = 5000;
+const loop_interval = 5000;
 
 function NordVPNApplet(orientation, panel_height, instance_id) {
     this._init(orientation, panel_height, instance_id);
@@ -30,37 +30,38 @@ NordVPNApplet.prototype = {
         this.settings.bind("notifications","notifications",this.on_settings_changed.bind(this));
 
         Util.spawn(['nordvpn','refresh']);
-        this._updateCountryList();
+        this.update_country_list();
         this.set_applet_icon_name("nordvpn");
         this.set_applet_tooltip(_("Click here to toggle VPN connection"));
 
-        this.previousStatus = "disconnected";
-        Util.spawn_async(['nordvpn','status'],this._connectionCallback.bind(this));
+        this.previous_status = "disconnected";
+        Util.spawn_async(['nordvpn','status'],this.connection_callback.bind(this));
 
-        this.isLooping = true;
-        this.loopId = Mainloop.timeout_add(loopInterval, function() {
-            if (!this.isLooping) {
+        this.is_looping = true;
+        this.loop_id = Mainloop.timeout_add(loop_interval, function() {
+            if (!this.is_looping) {
               return false;
             }
-            Util.spawn_async(['nordvpn','status'],this._connectionCallback.bind(this));
+            Util.spawn_async(['nordvpn','status'],this.connection_callback.bind(this));
             return true;
         }.bind(this));
     },
 
-    _nordNotify: function(msg) {
-        var notificationsOn = this.notifications;
-        if (notificationsOn) {
+    nord_notify: function(msg) {
+        if (this.notifications) {
             Main.notify("NordVPN",msg);
         }
     },
 
-    _connectionCallback: function(stdout) {
-        var newStatus = "";
-        if (trim(stdout) == "You have been disconnected from NordVPN." || trim(stdout) == "You are not connected to NordVPN.") {
+    connection_callback: function(stdout) {
+        var new_status = "";
+        if (trim(stdout) == "You have been disconnected from NordVPN."
+            || trim(stdout) == "You are not connected to NordVPN.") {
             this.set_applet_icon_name("nordvpn-white");
             this.set_applet_tooltip(_("NordVPN is not connected. Click here to connect."));
-            newStatus = "disconnected";
-        } else if (stdout.includes("You are connected to NordVPN.") || stdout.includes("Great! You are now connected")) {
+            new_status = "disconnected";
+        } else if (stdout.includes("You are connected to NordVPN.")
+            || stdout.includes("Great! You are now connected")) {
             this.set_applet_icon_name("nordvpn");
 
             Util.spawn_async(['nordvpn','status'],
@@ -69,21 +70,21 @@ NordVPNApplet.prototype = {
                 }.bind(this)
             );
 
-            newStatus = "connected";
+            new_status = "connected";
         } else {
             this.set_applet_icon_name("nordvpn-white");
             this.set_applet_tooltip(_("Status unknown"));
-            // this._nordNotify("Connection status is uknown.");
-            newStauts = "unknown";
+            // this.nord_notify("Connection status is uknown.");
+            new_status = "unknown";
         }
 
-        if (newStatus != this.previousStatus) {
-            this.previousStatus = newStatus;
-            this._nordNotify(stdout);
+        if (new_status != this.previous_status) {
+            this.previous_status = new_status;
+            this.nord_notify(stdout);
         }
     },
 
-    _clickToggleCallback: function(status) {
+    click_toggle_callback: function(status) {
         var args = ['nordvpn'];
         if (trim(status) == 'You are not connected to NordVPN.') {
             args.push('connect');
@@ -96,20 +97,20 @@ NordVPNApplet.prototype = {
             args.push('disconnect');
         }
 
-        Util.spawn_async(args, this._connectionCallback.bind(this));
+        Util.spawn_async(args, this.connection_callback.bind(this));
     },
 
-    _updateCountryList: function() {
+    update_country_list: function() {
         Util.spawn_async(["nordvpn","countries"],
             function(countries) {
 
-                var countryValues = trim(countries).split('\n');
-                var countryDescriptions = trim(countries).replace(/_/g, " ").split('\n');
+                var country_values = trim(countries).split('\n');
+                var country_descriptions = trim(countries).replace(/_/g, " ").split('\n');
 
                 var options = { None: "" };
 
-                for (var i = 0; i < countryDescriptions.length; i++) {
-                    options[countryDescriptions[i]] = countryValues[i];
+                for (var i = 0; i < country_descriptions.length; i++) {
+                    options[country_descriptions[i]] = country_values[i];
                 }
 
                 this.settings.setOptions("country", options);
@@ -127,7 +128,7 @@ NordVPNApplet.prototype = {
             } else {
                 message = "Auto-connect will connect to %s. Please reconnect to VPN to enable the change.".format(this.country.replace(/_/g," "));
             }
-            this._nordNotify(message);
+            this.nord_notify(message);
 
         } else if (setting != null) {
             if (typeof value === "boolean") {
@@ -138,20 +139,20 @@ NordVPNApplet.prototype = {
                 }
             }
 
-            Util.spawn_async(["nordvpn","set",setting,value],this._nordNotify.bind(this));
+            Util.spawn_async(["nordvpn","set",setting,value],this.nord_notify.bind(this));
         }
 
     },
 
 
     on_applet_removed_from_panel: function() {
-      Mainloop.source_remove(this.loopId);
-      this.loopId = 0;
-      this.isLooping = false;
+      Mainloop.source_remove(this.loop_id);
+      this.loop_id = 0;
+      this.is_looping = false;
     },
 
     on_applet_clicked: function() {
-        Util.spawn_async(['nordvpn','status'], this._clickToggleCallback.bind(this));
+        Util.spawn_async(['nordvpn','status'], this.click_toggle_callback.bind(this));
     }
 };
 
