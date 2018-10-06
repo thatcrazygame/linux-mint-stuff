@@ -37,6 +37,7 @@ NordVPNApplet.prototype = {
 
         this.previous_status = "disconnected";
         Util.spawn_async(['nordvpn','status'],this.connection_callback.bind(this));
+        Util.spawn_async(["nordvpn","settings"],this.check_settings.bind(this));
 
         this.is_looping = true;
         this.loop_id = Mainloop.timeout_add(loop_interval, function() {
@@ -44,6 +45,7 @@ NordVPNApplet.prototype = {
               return false;
             }
             Util.spawn_async(['nordvpn','status'],this.connection_callback.bind(this));
+            Util.spawn_async(["nordvpn","settings"],this.check_settings.bind(this));
             return true;
         }.bind(this));
     },
@@ -106,7 +108,7 @@ NordVPNApplet.prototype = {
             function(countries) {
 
                 var country_values = trim(countries).split('\n');
-                var country_descriptions = trim(countries).replace(/_/g, " ").split('\n');
+                var country_descriptions = trim(countries).replace(/_/g, " ").split("\n");
 
                 var options = { None: "" };
 
@@ -118,6 +120,24 @@ NordVPNApplet.prototype = {
 
             }.bind(this)
         );
+    },
+
+    check_settings: function(stdout) {
+        var cmd_settings = trim(stdout).toLowerCase().replace(/ /g, "").split("\n");
+
+        for (var i = 0; i < cmd_settings.length; i++) {
+            var setting = cmd_settings[i].split(":");
+
+            if (setting[1] == "enabled") {
+                setting[1] = true;
+            }
+
+            if (setting[1] == "disabled") {
+                setting[1] = false;
+            }
+
+            this.settings.setValue(setting[0],setting[1]);
+        }
     },
 
     on_settings_changed: function(value, setting) {

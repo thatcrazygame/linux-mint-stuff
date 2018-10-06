@@ -14,7 +14,7 @@
     "autoconnect": {
         "type": "switch",
         "default": false,
-        "description": "Autoconnect on start"
+        "description": "Autoconnect (not sure what this does)"
     },
     "killswitch": {
         "type": "switch",
