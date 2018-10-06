@@ -140,7 +140,9 @@ NordVPNApplet.prototype = {
                 setting[1] = false;
             }
 
-            this.settings.setValue(setting[0],setting[1]);
+            if (this.settings.getValue(setting[0]) != setting[1]) {
+                this.settings.setValue(setting[0],setting[1]);
+            }
         }
     },
 
