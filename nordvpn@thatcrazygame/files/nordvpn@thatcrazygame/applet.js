@@ -74,10 +74,14 @@ NordVPNApplet.prototype = {
             );
 
             new_status = "connected";
+        } else if (stdout === "") {
+            // not sure why stdout is empty when the not logged in message comes back
+            stdout = "You need to log in first! Use the 'nordvpn login' command, or use the 'Log in' button in applet settings.";
+            new_status = "loggedout";
         } else {
             this.set_applet_icon_name("nordvpn-white");
             this.set_applet_tooltip(_("Status unknown"));
-            // this.nord_notify("Connection status is uknown.");
+            this.nord_notify("Connection status is uknown.");
             new_status = "unknown";
         }
 
