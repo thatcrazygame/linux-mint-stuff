@@ -1,0 +1,11 @@
+{
+    "header-settings" : {
+        "type" : "header",
+        "description" : "Settings"
+    },
+    "notifications": {
+        "type": "switch",
+        "default": true,
+        "description": "Notifications"
+    }
+}
