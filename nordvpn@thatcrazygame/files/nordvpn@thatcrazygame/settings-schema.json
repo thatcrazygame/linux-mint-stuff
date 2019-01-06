@@ -1,48 +1,124 @@
 {
-    "header-settings" : {
-        "type" : "header",
-        "description" : "Settings"
-    },
-    "country": {
-        "type": "combobox",
-        "default": "",
-        "description": "Specify country to use in quick-connect",
-        "options": {
-            "None": ""
+    "layout1": {
+        "type": "layout",
+        "pages": ["page1","page2"],
+        "page1": {
+            "type": "page",
+            "title": "Connection",
+            "sections": ["section1","section2"]
+        },
+        "page2": {
+            "type": "page",
+            "title": "General",
+            "sections": ["section3"]
+        },
+        "section1": {
+            "type": "section",
+            "title": "Connection Options",
+            "keys": ["country","cities-0","cities-1","cities-2","cities-3","cities-4","cities-5","cities-6","cities-7","cities-8","cities-9",
+                "cities-10","cities-11","cities-12","cities-13","cities-14","cities-15","cities-16","cities-17","cities-18","cities-19",
+                "cities-20","cities-21","cities-22","cities-23","cities-24","cities-25","cities-26","cities-27","cities-28","cities-29",
+                "cities-30","cities-31","cities-32","cities-33","cities-34","cities-35","cities-36","cities-37","cities-38","cities-39",
+                "cities-40","cities-41","cities-42","cities-43","cities-44","cities-45","cities-46","cities-47","cities-48","cities-49",
+                "cities-50","cities-51","cities-52","cities-53","cities-54","cities-55","cities-56","cities-57","cities-58","cities-59",
+                "cities-60","cities-61","cities-62","cities-63","cities-64","cities-65","cities-66","cities-67","cities-68","cities-69",
+                "cities-70","cities-71","cities-72","cities-73","cities-74","cities-75",
+                "protocol","killswitch","cybersec","obfuscate","dns"
+            ]
+        },
+        "section2": {
+            "type": "section",
+            "title": "DNS Servers",
+            "keys": ["ip-0","ip-1","ip-2","ip-3","ip-4","ip-5"],
+            "dependency": "dns=true"
+        },
+        "section3": {
+            "type": "section",
+            "title": "General Settings",
+            "keys": ["autoconnect","notifications","login","logout"]
         }
     },
-    "autoconnect": {
-        "type": "switch",
-        "default": false,
-        "description": "Autoconnect (not sure what this does)"
-    },
-    "killswitch": {
-        "type": "switch",
-        "default": false,
-        "description": "Internet killswitch when VPN connection drops"
-    },
-    "cybersec": {
-        "type": "switch",
-        "default": false,
-        "description": "CyberSec: Additional advertising, privacy, and security protection"
-    },
+
     "protocol": {
         "type": "radiogroup",
         "default": "udp",
-        "description": "VPN protocol",
+        "description": "Protocol",
         "options": {
             "UDP": "udp",
             "TCP": "tcp"
         }
+    },
+    "killswitch": {
+        "type": "switch",
+        "default": false,
+        "description": "Kill Switch",
+        "tooltip": "Internet killswitch when VPN connection drops"
+    },
+    "cybersec": {
+        "type": "switch",
+        "default": false,
+        "description": "CyberSec",
+        "tooltip": "Additional advertising, privacy, and security protection"
+    },
+    "obfuscate": {
+        "type": "switch",
+        "default": false,
+        "description": "Obfuscated Servers",
+        "tooltip": "Servers capable of bypassing specific country restrictions"
+    },
+    "dns": {
+        "type": "switch",
+        "default": false,
+        "description": "DNS"
+    },
+    "ip-0": {
+        "type": "entry",
+        "default": "",
+        "description": "",
+        "dependency": "country=NA"
+    },
+    "ip-1": {
+        "type": "entry",
+        "default": "",
+        "description": "",
+        "dependency": "country=NA"
+    },
+    "ip-2": {
+        "type": "entry",
+        "default": "",
+        "description": "",
+        "dependency": "country=NA"
+    },
+    "ip-3": {
+        "type": "entry",
+        "default": "",
+        "description": "",
+        "dependency": "country=NA"
+    },
+    "ip-4": {
+        "type": "entry",
+        "default": "",
+        "description": "",
+        "dependency": "country=NA"
+    },
+    "ip-5": {
+        "type": "entry",
+        "default": "",
+        "description": "",
+        "dependency": "country=NA"
+    },
+    "autoconnect": {
+        "type": "switch",
+        "default": false,
+        "description": "Autoconnect",
+        "tooltip": "Autoconnect on system start"
     },
     "notifications": {
         "type": "switch",
         "default": true,
         "description": "Notifications"
     },
-    "login/out":{
-        "type": "separator"
-    },
+
     "login":{
         "type": "button",
         "description": "Log in",
@@ -52,5 +128,699 @@
         "type": "button",
         "description": "Log out",
         "callback": "logout"
+    },
+
+    "country": {
+        "type": "combobox",
+        "default": "",
+        "description": "Country",
+        "options": {
+            "None": ""
+        },
+        "tooltip": "Specify country to use in quick connect. If 'None' is chosen, the best server will be auto selected."
+    },
+    "cities-0": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 0",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-1": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 1",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-2": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 2",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-3": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 3",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-4": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 4",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-5": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 5",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-6": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 6",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-7": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 7",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-8": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 8",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-9": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 9",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-10": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 10",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-11": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 11",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-12": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 12",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-13": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 13",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-14": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 14",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-15": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 15",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-16": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 16",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-17": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 17",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-18": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 18",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-19": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 19",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-20": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 20",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-21": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 21",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-22": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 22",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-23": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 23",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-24": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 24",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-25": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 25",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-26": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 26",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-27": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 27",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-28": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 28",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-29": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 29",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-30": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 30",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-31": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 31",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-32": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 32",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-33": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 33",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-34": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 34",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-35": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 35",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-36": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 36",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-37": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 37",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-38": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 38",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-39": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 39",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-40": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 40",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-41": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 41",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-42": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 42",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-43": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 43",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-44": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 44",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-45": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 45",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-46": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 46",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-47": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 47",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-48": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 48",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-49": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 49",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-50": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 50",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-51": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 51",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-52": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 52",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-53": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 53",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-54": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 54",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-55": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 55",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-56": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 56",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-57": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 57",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-58": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 58",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-59": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 59",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-60": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 60",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-61": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 61",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-62": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 62",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-63": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 63",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-64": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 64",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-65": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 65",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-66": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 66",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-67": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 67",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-68": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 68",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-69": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 69",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-70": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 70",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-71": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 71",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-72": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 72",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-73": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 73",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-74": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 74",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
+    },
+    "cities-75": {
+        "type": "combobox",
+        "default": "",
+        "description": "Cities 75",
+        "options": {
+            "None": ""
+        },
+        "dependency": "country=NA"
     }
 }
